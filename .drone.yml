@@ -4,7 +4,7 @@ type: docker
 
 steps:
   - name: before_script
-    image: cimg/rust:1.67.1
+    image: rust:latest
     commands:
       - rustc --version
       - cargo --version
@@ -16,7 +16,7 @@ type: docker
 
 steps:
   - name: audit-code
-    image: cimg/rust:1.67.1
+    image: rust:latest
     commands:
       - cargo install cargo-audit
       - cargo audit
@@ -28,7 +28,7 @@ name: lint-code
 type: docker
 steps:
   - name: lint-code
-    image: cimg/rust:1.67.1
+    image: rust:latest
     commands:
       - rustup component add clippy
       - cargo clippy -- -D warnings
