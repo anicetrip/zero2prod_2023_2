@@ -2,15 +2,12 @@ kind: pipeline
 name: before_script
 type: docker
 
-
 steps:
-- name: before_script
-  image: cimg/rust:1.67.1
-  commands:
-  - rustc --version
-  - cargo --version
-
-
+  - name: before_script
+    image: cimg/rust:1.67.1
+    commands:
+      - rustc --version
+      - cargo --version
 
 ---
 kind: pipeline
@@ -18,52 +15,22 @@ name: audit-code
 type: docker
 
 steps:
-- name: audit-code
-  image: cimg/rust:1.67.1
-  commands:
-  - cargo install cargo-audit
-  - cargo audit
-
----
-kind: pipeline
-name: test-code
-type: docker
-
-steps:
-- name: test-code
-  image: cimg/rust:1.67.1
-  commands:
-  - cargo test
-  # - cargo install cargo-tarpaulin
-  # - cargo tarpaulin --ignore-tests
-
-
-
+  - name: audit-code
+    image: cimg/rust:1.67.1
+    commands:
+      - cargo install cargo-audit
+      - cargo audit
+      - cargo test
 
 ---
 kind: pipeline
 name: lint-code
 type: docker
 steps:
-
-- name: lint-code
-  image: cimg/rust:1.67.1
-  commands:
-  - rustup component add clippy
-  - cargo clippy -- -D warnings
-
-
-
----
-kind: pipeline
-name: format-code
-type: docker
-
-steps:
-- name: format-code
-  image: cimg/rust:1.67.1
-  commands:
-  - rustup component add rustfmt
-  - cargo fmt -- --check
-
-
+  - name: lint-code
+    image: cimg/rust:1.67.1
+    commands:
+      - rustup component add clippy
+      - cargo clippy -- -D warnings
+      - rustup component add rustfmt
+      - cargo fmt -- --check
