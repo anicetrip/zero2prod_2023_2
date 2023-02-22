@@ -1,0 +1,69 @@
+kind: pipeline
+name: before_script
+type: docker
+
+
+steps:
+- name: before_script
+  image: rust:latest
+  commands:
+  - rustc --version
+  - cargo --version
+
+
+
+---
+kind: pipeline
+name: audit-code
+type: docker
+
+steps:
+- name: audit-code
+  image: rust:latest
+  commands:
+  - cargo install cargo-audit
+  - cargo audit
+
+---
+kind: pipeline
+name: test-code
+type: docker
+
+steps:
+- name: test-code
+  image: rust:latest
+  commands:
+  - cargo test
+  # - cargo install cargo-tarpaulin
+  # - cargo tarpaulin --ignore-tests
+
+
+
+
+---
+kind: pipeline
+name: lint-code
+type: docker
+steps:
+
+- name: lint-code
+  image: rust:latest
+  commands:
+  - rustup component add clippy
+  - cargo clippy -- -D warnings
+
+
+
+---
+kind: pipeline
+name: format-code
+type: docker
+
+steps:
+- name: format-code
+  image: rust:latest
+  commands:
+  - rustup component add rustfmt
+  - cargo fmt -- --check
+
+
