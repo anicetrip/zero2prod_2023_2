@@ -1,14 +1,3 @@
-# kind: pipeline
-# name: before_script
-# type: docker
-
-# steps:
-#   - name: before_script
-#     image: rust:latest
-#     commands:
-#       - rustc --version
-#       - cargo --version
-# ---
 kind: pipeline
 name: fmt_audit-code
 type: docker
@@ -20,22 +9,10 @@ steps:
       - cargo fmt -- --check
   - name: audit-code
     image: rust:latest
+    commands:
       - cargo install cargo-audit
       - cargo audit
       - cargo test
-
-
-# ---
-# kind: pipeline
-# name: lint-code
-# type: docker
-# steps:
-#   - name: lint-code
-#     image: rust:latest
-#     privileged: true
-#     commands:
-#       - rustup component add clippy
-#       - cargo clippy -- -D warnings
 
 ---
 kind: pipeline
