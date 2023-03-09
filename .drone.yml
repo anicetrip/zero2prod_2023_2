@@ -8,7 +8,6 @@
 #     commands:
 #       - rustc --version
 #       - cargo --version
-
 # ---
 kind: pipeline
 name: audit-code
