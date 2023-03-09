@@ -38,7 +38,7 @@ steps:
 # docker pull xd009642/tarpaulin
 ---
 kind: pipeline
-name: audit-code
+name: tarpaulin-code
 type: docker
 
 steps:
