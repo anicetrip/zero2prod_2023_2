@@ -18,7 +18,7 @@ steps:
     commands:
       - rustup component add rustfmt
       - cargo fmt -- --check
-   - name: audit-code
+  - name: audit-code
     image: rust:latest
       - cargo install cargo-audit
       - cargo audit
