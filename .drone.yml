@@ -10,7 +10,7 @@
 #       - cargo --version
 # ---
 kind: pipeline
-name: audit-code
+name: fmt_audit-code
 type: docker
 steps:
   - name: fmt code
@@ -39,7 +39,7 @@ steps:
 
 ---
 kind: pipeline
-name: coverage_test
+name: lint_coverage_test
 type: docker
 steps:
   - name: lint-code
