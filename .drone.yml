@@ -11,7 +11,7 @@
 
 # ---
 kind: pipeline
-name: fmt_audit-code
+name: audit-code
 type: docker
 steps:
   - name: fmt code
@@ -26,18 +26,29 @@ steps:
       - cargo test
 
 
+# ---
+# kind: pipeline
+# name: lint-code
+# type: docker
+# steps:
+#   - name: lint-code
+#     image: rust:latest
+#     privileged: true
+#     commands:
+#       - rustup component add clippy
+#       - cargo clippy -- -D warnings
 
 ---
 kind: pipeline
-name: lint_coverage_test
+name: coverage_test
 type: docker
+steps:
   - name: lint-code
     image: rust:latest
     privileged: true
     commands:
       - rustup component add clippy
       - cargo clippy -- -D warnings
-steps:
   - name: lint-code
     image: rust:latest
     privileged: true
