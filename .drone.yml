@@ -15,7 +15,7 @@ name: audit-code
 type: docker
 
 steps:
-  - name: audit-code
+  - name: audit-code_test-code
     image: rust:latest
     commands:
       - cargo install cargo-audit
