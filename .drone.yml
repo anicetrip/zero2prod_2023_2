@@ -28,7 +28,7 @@ name: lint-code
 type: docker
 steps:
   - name: lint-code
-    image: rust:latest  --security-opt seccomp=unconfined
+    image: rust:latest
     privileged: true
     # environment: 
     #   - --security-opt seccomp=unconfined
