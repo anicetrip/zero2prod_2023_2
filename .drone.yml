@@ -29,13 +29,16 @@ type: docker
 steps:
   - name: lint-code
     image: rust:latest
+    privileged: true
+    environment: --security-opt seccomp=unconfined
     commands:
       # - rustup component add rustfmt
       # - cargo fmt -- --check
       # - rustup component add clippy
       # - cargo clippy -- -D warnings
-      # - cargo install cargo-tarpaulin:0.16.0
-      - cargo install --version 0.16.0 cargo-tarpaulin
+      - cargo install cargo-tarpaulin
+      # - cargo install --version 0.16.0 cargo-tarpaulin
       - cargo tarpaulin --ignore-tests
 
 
+# --security-opt seccomp=unconfined
