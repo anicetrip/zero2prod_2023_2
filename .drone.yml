@@ -9,37 +9,33 @@ steps:
       - rustc --version
       - cargo --version
 
-# ---
-# kind: pipeline
-# name: audit-code
-# type: docker
-
-# steps:
-#   - name: audit-code_test-code
-#     image: rust:latest
-#     commands:
-#       - cargo install cargo-audit
-#       - cargo audit
-#       - cargo test
+---
+kind: pipeline
+name: audit-code
+type: docker
+concurrency: 2
+steps:
+  - name: audit-code_test-code
+    image: rust:latest
+    commands:
+      - cargo install cargo-audit
+      - cargo audit
+      - cargo test
 
 ---
 kind: pipeline
 name: lint-code
 type: docker
+concurrency: 2
 steps:
   - name: lint-code
     image: rust:latest
     privileged: true
-    # environment: 
-    #   - --security-opt seccomp=unconfined
     commands:
-      # - rustup component add rustfmt
-      # - cargo fmt -- --check
-      # - rustup component add clippy
-      # - cargo clippy -- -D warnings
+      - rustup component add rustfmt
+      - cargo fmt -- --check
+      - rustup component add clippy
+      - cargo clippy -- -D warnings
       - cargo install cargo-tarpaulin
-      # - cargo install --version 0.16.0 cargo-tarpaulin
       - cargo tarpaulin --ignore-tests
 
-
-# --security-opt seccomp=unconfined
