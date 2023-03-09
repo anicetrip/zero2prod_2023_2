@@ -1,6 +1,6 @@
-use std::{net::TcpListener, fmt::format};
+use std::net::TcpListener;
 
-use sqlx::{PgConnection, Connection, PgPool};
+use sqlx::PgPool;
 use zero2prod::configuration::get_configuration;
 use zero2prod::setup::run;
 
