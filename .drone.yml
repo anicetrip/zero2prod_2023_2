@@ -17,11 +17,12 @@ steps:
   - name: audit-code_test-code
     image: rust:latest
     commands:
+      - rustup component add rustfmt
+      - cargo fmt -- --check
       - cargo install cargo-audit
       - cargo audit
       - cargo test
-      - rustup component add rustfmt
-      - cargo fmt -- --check
+
 
 ---
 kind: pipeline
@@ -32,9 +33,17 @@ steps:
     image: rust:latest
     privileged: true
     commands:
-
       - rustup component add clippy
       - cargo clippy -- -D warnings
+
+---
+kind: pipeline
+name: coverage_test
+type: docker
+steps:
+  - name: lint-code
+    image: rust:latest
+    privileged: true
+    commands:
       - cargo install cargo-tarpaulin
       - cargo tarpaulin --ignore-tests
-
