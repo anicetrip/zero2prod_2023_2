@@ -42,7 +42,7 @@ kind: pipeline
 name: lint_coverage_test
 type: docker
 steps:
-  - name: lint-code
+  - name: clippy-code
     image: rust:latest
     privileged: true
     commands:
