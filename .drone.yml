@@ -28,10 +28,10 @@ name: lint-code
 type: docker
 steps:
   - name: lint-code
-    image: rust:latest
+    image: rust:latest  --security-opt seccomp=unconfined
     privileged: true
-    environment: 
-      - --security-opt seccomp=unconfined
+    # environment: 
+    #   - --security-opt seccomp=unconfined
     commands:
       # - rustup component add rustfmt
       # - cargo fmt -- --check
