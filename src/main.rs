@@ -15,7 +15,7 @@ async fn main() -> std::io::Result<()> {
         PgPool::connect(configuration.database.connection_string().expose_secret())
             .await
             .expect("failed to connect to postgres.");
-    let address = format!("127.0.0.1:{}", configuration.application_port);
+    let address = format!("0.0.0.0:{}", configuration.application_port);
     println!("{}", address);
     let listerner = TcpListener::bind(address)?;
     run(listerner, connection_pool)?.await
