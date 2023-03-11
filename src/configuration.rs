@@ -1,4 +1,3 @@
-use actix_web::cookie::time::error::Format;
 use secrecy::{ExposeSecret, Secret};
 
 #[derive(serde::Deserialize)]
@@ -38,7 +37,7 @@ pub fn get_configuration() -> Result<Settings, config::ConfigError> {
             configuration_directory.join("base.yaml"),
         ))
         .add_source(config::File::from(
-            configuration_directory.join("base.yaml"),
+            configuration_directory.join(&environment_filename),
         ))
         .build()?;
     settings.try_deserialize::<Settings>()
