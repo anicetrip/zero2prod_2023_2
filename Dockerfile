@@ -1,5 +1,5 @@
 # Builder stage
-FROM rust: latest AS builder
+FROM rust:latest AS builder
 WORKDIR /app
 RUN apt update&&apt install lld clang -y
 COPY .  .
@@ -7,7 +7,7 @@ ENV SQLX_OFFLINE true
 RUN cargo build --release
 
 # Runtime stage
-FROM rust: latest-slim AS runtime
+FROM rust:latest-slim AS runtime
 WORKDIR /app
 # Copy the compiled binary from the builder environment
 # to our runtime environment
