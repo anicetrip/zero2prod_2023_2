@@ -2,3 +2,4 @@ application:
   host: 0.0.0.0
 database:
   host: "47.87.188.204"
+  require_ssl: true
