@@ -38,9 +38,6 @@ ENTRYPOINT ["./zero2prod"]
 
 
 
-
-
-
 # Builder stage
 FROM rust:latest AS builder
 WORKDIR /app
