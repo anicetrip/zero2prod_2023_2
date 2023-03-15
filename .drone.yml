@@ -48,7 +48,6 @@ steps:
     privileged: true
     privileged: true
     commands:
-      - cargo install cargo-tarpaulin
       - cargo tarpaulin --ignore-tests
 
 
