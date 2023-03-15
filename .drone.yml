@@ -37,19 +37,39 @@ type: docker
 
 steps:
   - name: test-code
-    image: rust:latest
-    privileged: true
+    image: xd009642/tarpaulin:latest
     commands:
       - cargo test
       - cargo fmt -- --check
 
 steps:
   - name: lint-code
-    image: rust:latest
+    image: xd009642/tarpaulin:latest
+    privileged: true
     privileged: true
     commands:
       - cargo install cargo-tarpaulin
       - cargo tarpaulin --ignore-tests
 
 
+---
+kind: pipeline
+name: docker_stop
+type: docker
+steps:
+  - name: ssh commands
+    privileged: true
+    pull: if-not-exists
+    image: appleboy/drone-ssh:latest
+    settings:
+      host:
+        from_secret: ssh_ip
+      username:
+        from_secret: ssh_username
 
+      password:
+        from_secret: ssh_password
+      port:
+        from_secret: ssh_port
+      script:
+       - docker run -d -p 8000:8000 zero2prod
