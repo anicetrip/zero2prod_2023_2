@@ -1,30 +1,44 @@
 kind: pipeline
-name: fmt_audit-code
+name: docker_stop
 type: docker
 steps:
-  - name: fmt code
-    image: rust:latest
-    commands:
-      - rustup component add rustfmt
-      - cargo fmt -- --check
-  - name: audit-code
-    image: rust:latest
-    commands:
-      - cargo install cargo-audit
-      - cargo audit
-      - cargo test
+  - name: ssh commands
+    pull: if-not-exists
+    image: appleboy/drone-ssh:latest
+    settings:
+      host:
+        from_secret: ssh_ip
+      port:
+        from_secret: ssh_port
+       script:
+        - pwd
+        - echo =======暂停容器=======
+        - docker stop `docker ps -a | grep zero2prod | awk '{print $1}' `
+        - echo =======暂停旧容器和镜像=======
+        - docker rm -f `docker ps -a | grep springdemo | awk '{print $1}' `
+        - docker rmi `docker images | grep springdemo | awk '{print $3}' `
+        - echo =======删除多余信息=======
+        - docker system prune
+        - docker system prune --volumes
+        - echo =======清理完成开始建立新镜像=======
+        - cd /root/zero2prod_2023_2
+        - docker build --tag zero2prod --file Dockerfile .
+
 
 ---
 kind: pipeline
-name: lint_coverage_test
+name: coverage_test
 type: docker
+
 steps:
-  - name: clippy-code
+  - name: test-code
     image: rust:latest
     privileged: true
     commands:
-      - rustup component add clippy
-      - cargo clippy -- -D warnings
+      - cargo test
+      - cargo fmt -- --check
+
+steps:
   - name: lint-code
     image: rust:latest
     privileged: true

@@ -1,6 +1,6 @@
 # essential command
 
-`cargo watch -x check -x test -x run`
+`cargo watch -x check -x test -x fmt -x clippy  -x run`
 `curl -v`
 
 `curl -v http://127.0.0.1:8000/health_check`
