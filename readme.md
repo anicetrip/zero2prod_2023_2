@@ -15,3 +15,29 @@ http://127.0.0.1:8000/subscriptions`
 
 `docker system prune`
 `docker system prune --volumes`
+`sudo docker exec -it 775c7c9ee1e1 /bin/bash  `
+
+
+# Set ssl for postgres in docker
+```
+su postgres
+cd /var/lib/postgresql/data/
+openssl req -new -text -passout pass:abcd -subj /CN=localhost -out server.req -keyout privkey.pem
+openssl rsa -in privkey.pem -passin pass:abcd -out server.key
+openssl req -x509 -in server.req -text -key server.key -out server.crt
+chmod 600 server.key
+
+```
+
+
+change conf:
+/var/lib/postgresql/data/postgresql.conf
+search `# - SSL -`
+
+```  # - SSL -
+- # ssl = off
++ ssl = on
+- # ssl_cert_file = ''
++ ssl_cert_file = '/var/lib/postgresql/data/server.crt'
+- # ssl_key_file = ''
++ ssl_key_file = '/var/lib/postgresql/data/server.key'```
