@@ -1,3 +1,66 @@
+steps:
+  - name: stop docker
+    privileged: true
+    image: appleboy/drone-ssh:latest
+    settings:
+      host:
+        from_secret: ssh_ip
+      username:
+        from_secret: ssh_username
+
+      password:
+        from_secret: ssh_password
+      port:
+        from_secret: ssh_port
+      script:
+        - pwd
+        - echo =======暂停容器=======
+        - docker stop `docker ps -a | grep zero2prod | awk '{print $1}' `
+        - echo =======暂停旧容器和镜像=======
+        - docker rm -f `docker ps -a | grep springdemo | awk '{print $1}' `
+        - docker rmi `docker images | grep springdemo | awk '{print $3}' `
+        - echo =======删除多余信息=======
+        - docker system prune -f
+        - docker system prune --volumes -f
+
+
+kind: pipeline
+name: fmt_audit-code
+type: docker
+steps:
+  - name: fmt code
+    image: rust:latest
+    commands:
+      - rustup component add rustfmt
+      - cargo fmt -- --check
+  - name: audit-code
+    image: rust:latest
+    commands:
+      - cargo install cargo-audit
+      - cargo audit
+      - cargo test
+
+---
+kind: pipeline
+name: lint_coverage_test
+type: docker
+steps:
+  - name: clippy-code
+    image: rust:latest
+    privileged: true
+    commands:
+      - rustup component add clippy
+      - cargo clippy -- -D warnings
+  - name: lint-code
+    image: rust:latest
+    privileged: true
+    commands:
+      - cargo install cargo-tarpaulin
+      - cargo tarpaulin --ignore-tests
+
+
+
+---
 kind: pipeline
 name: docker_stop
 type: docker
@@ -29,11 +92,6 @@ steps:
         - cd /root/zero2prod_2023_2
         - echo =======更新源码=======
         - git pull
-        - echo =======代码检查=======
-        - cargo fmt -- --check
-        - cargo clippy -- -D warnings
-        - cargo audit
-        - cargo test
         - echo =======覆盖率测试=======
         - cargo tarpaulin --ignore-tests
         - echo =======删除debug中的内容=======
