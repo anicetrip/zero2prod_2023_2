@@ -4,7 +4,6 @@ type: docker
 steps:
   - name: ssh commands
     privileged: true
-    pull: if-not-exists
     image: appleboy/drone-ssh:latest
     settings:
       host:
@@ -28,11 +27,16 @@ steps:
         - docker system prune --volumes -f
         - echo =======清理完成开始建立新镜像=======
         - cd /root/zero2prod_2023_2
+        - echo =======更新源码=======
         - git pull
+        - echo =======代码检查=======
         - cargo fmt -- --check
         - cargo clippy -- -D warnings
         - cargo test
-        - cargo tarpaulin --ignore-tests 
+        - echo =======覆盖率测试=======
+        - cargo tarpaulin --ignore-tests
+        - echo =======建立容器=======
         - docker build --tag zero2prod --file Dockerfile .
+        - echo =======运行容器=======
         - docker run -d -p 8000:8000 zero2prod
 
