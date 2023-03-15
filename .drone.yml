@@ -10,10 +10,11 @@ steps:
         from_secret: ssh_ip
       username:
         from_secret: ssh_username
-      port:
-        from_secret: ssh_port
+
       password:
         from_secret: ssh_password
+      port:
+        from_secret: ssh_port
        script:
         - pwd
         - echo =======暂停容器=======
