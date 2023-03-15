@@ -1,6 +1,10 @@
 kind: pipeline
 name: docker_stop
 type: docker
+
+clone:
+  disable: true
+
 steps:
   - name: stop docker
     privileged: true
@@ -58,6 +62,9 @@ steps:
 kind: pipeline
 name: docker_start
 type: docker
+clone:
+  disable: true
+
 steps:
   - name: ssh commands
     privileged: true
