@@ -22,6 +22,7 @@ steps:
         - echo =======暂停旧容器和镜像=======
         - docker rm -f `docker ps -a | grep springdemo | awk '{print $1}' `
         - docker rmi `docker images | grep springdemo | awk '{print $3}' `
+        - exit 0
         # - echo =======删除多余信息=======
         # - docker system prune -f
         # - docker system prune --volumes -f
@@ -42,19 +43,17 @@ steps:
     commands:
       # - cargo install cargo-audit
       - cargo audit
-  - name: test-code
-    pull: if-not-exists
-    image: rust_ci:latest
-    commands:
-      - cargo test
   - name: clippy-code
     pull: if-not-exists
     image: rust_ci:latest
     commands:
-  - name: tarpaulin-code
+      - cargo clippy
+  - name: test_tarpaulin-code
+    privileged: true
     pull: if-not-exists
     image: rust_ci:latest
     commands:
+      - cargo test
       - cargo tarpaulin --ignore-tests
 
 
