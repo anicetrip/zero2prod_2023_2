@@ -54,7 +54,7 @@ steps:
 
 ---
 kind: pipeline
-name: docker_stop
+name: docker_run
 type: docker
 steps:
   - name: ssh commands
