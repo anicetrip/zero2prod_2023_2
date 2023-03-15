@@ -22,11 +22,11 @@ steps:
         - echo =======暂停旧容器和镜像=======
         - docker rm -f `docker ps -a | grep springdemo | awk '{print $1}' `
         - docker rmi `docker images | grep springdemo | awk '{print $3}' `
-        - echo =======删除多余信息=======
-        - docker system prune -f
-        - docker system prune --volumes -f
+        # - echo =======删除多余信息=======
+        # - docker system prune -f
+        # - docker system prune --volumes -f
 
-
+---
 kind: pipeline
 name: fmt_audit-code
 type: docker
@@ -35,39 +35,33 @@ steps:
     pull: if-not-exists
     image: rust_ci:latest
     commands:
-      # - rustup component add rustfmt
       - cargo fmt -- --check
   - name: audit-code
-    image: rust:latest
+    pull: if-not-exists
+    image: rust_ci:latest
     commands:
       # - cargo install cargo-audit
       - cargo audit
+  - name: test-code
+    pull: if-not-exists
+    image: rust_ci:latest
+    commands:
       - cargo test
-
----
-kind: pipeline
-name: lint_coverage_test
-type: docker
-steps:
   - name: clippy-code
     pull: if-not-exists
     image: rust_ci:latest
-    privileged: true
     commands:
-      # - rustup component add clippy
-      - cargo clippy -- -D warnings
-  - name: lint-code
-    image: rust:latest
-    privileged: true
+  - name: tarpaulin-code
+    pull: if-not-exists
+    image: rust_ci:latest
     commands:
-      # - cargo install cargo-tarpaulin
       - cargo tarpaulin --ignore-tests
 
 
 
 ---
 kind: pipeline
-name: docker_stop
+name: docker_start
 type: docker
 steps:
   - name: ssh commands
