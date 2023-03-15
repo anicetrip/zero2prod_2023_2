@@ -28,7 +28,6 @@ steps:
         - cd /root/zero2prod_2023_2
         - docker build --tag zero2prod --file Dockerfile .
 
-
 ---
 kind: pipeline
 name: coverage_test
