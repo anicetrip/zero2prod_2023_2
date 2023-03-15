@@ -43,16 +43,12 @@ steps:
     commands:
       # - cargo install cargo-audit
       - cargo audit
-  - name: clippy-code
-    pull: if-not-exists
-    image: rust_ci:latest
-    commands:
-      - cargo clippy
   - name: test_tarpaulin-code
     privileged: true
     pull: if-not-exists
     image: rust_ci:latest
     commands:
+      - cargo clippy
       - cargo test
       - cargo tarpaulin --ignore-tests
 
