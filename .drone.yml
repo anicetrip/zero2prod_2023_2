@@ -15,7 +15,7 @@ steps:
         from_secret: ssh_password
       port:
         from_secret: ssh_port
-       script:
+      script:
         - pwd
         - echo =======暂停容器=======
         - docker stop `docker ps -a | grep zero2prod | awk '{print $1}' `
