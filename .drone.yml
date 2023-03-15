@@ -13,7 +13,7 @@ steps:
       port:
         from_secret: ssh_port
       password:
-        from_secret: ssh_pass
+        from_secret: ssh_password
        script:
         - pwd
         - echo =======暂停容器=======
