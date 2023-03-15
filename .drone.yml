@@ -3,6 +3,7 @@ name: docker_stop
 type: docker
 steps:
   - name: ssh commands
+    privileged: true
     pull: if-not-exists
     image: appleboy/drone-ssh:latest
     settings:
@@ -23,8 +24,8 @@ steps:
         - docker rm -f `docker ps -a | grep springdemo | awk '{print $1}' `
         - docker rmi `docker images | grep springdemo | awk '{print $3}' `
         - echo =======删除多余信息=======
-        - docker system prune
-        - docker system prune --volumes
+        - docker system prune -f
+        - docker system prune --volumes -f
         - echo =======清理完成开始建立新镜像=======
         - cd /root/zero2prod_2023_2
         - docker build --tag zero2prod --file Dockerfile .
