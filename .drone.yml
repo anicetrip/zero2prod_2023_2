@@ -29,7 +29,7 @@ name: fmt_audit-code
 type: docker
 steps:
   - name: fmt code
-    image: rust:latest
+    image: rust_ci:latest
     commands:
       - rustup component add rustfmt
       - cargo fmt -- --check
@@ -46,7 +46,7 @@ name: lint_coverage_test
 type: docker
 steps:
   - name: clippy-code
-    image: rust:latest
+    image: rust_ci:latest
     privileged: true
     commands:
       - rustup component add clippy

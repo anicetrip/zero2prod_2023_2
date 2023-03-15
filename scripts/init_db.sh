@@ -38,6 +38,7 @@ then
       -e POSTGRES_DB=${DB_NAME} \
       -p "${DB_PORT}":5432 \
       -d \
+      --cpus=1\
       --name "postgres_$(date '+%s')" \
       postgres -N 1000
       # ^ Increased maximum number of connections for testing purposes

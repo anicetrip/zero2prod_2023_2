@@ -1,8 +1,9 @@
 FROM rust:slim
 WORKDIR /app
 RUN apt update&&apt install lld clang -y
-RUN rustup component add rustfmt
+RUN rustup component add rustfmt 
+RUN apt install pkg-config -y
+RUN apt install libssl-dev -y
 RUN cargo install cargo-audit
 RUN rustup component add clippy
 RUN cargo install cargo-tarpaulin
-
