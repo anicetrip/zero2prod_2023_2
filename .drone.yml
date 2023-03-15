@@ -32,6 +32,7 @@ steps:
         - echo =======代码检查=======
         - cargo fmt -- --check
         - cargo clippy -- -D warnings
+        - cargo audit
         - cargo test
         - echo =======覆盖率测试=======
         - cargo tarpaulin --ignore-tests
