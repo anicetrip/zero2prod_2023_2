@@ -35,6 +35,8 @@ steps:
         - cargo test
         - echo =======覆盖率测试=======
         - cargo tarpaulin --ignore-tests
+        - echo =======删除debug中的内容=======
+        - rm -rf /root/zero2prod_2023_2/target/debug/*
         - echo =======建立容器=======
         - docker build --tag zero2prod --file Dockerfile .
         - echo =======运行容器=======
