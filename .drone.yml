@@ -29,6 +29,7 @@ name: fmt_audit-code
 type: docker
 steps:
   - name: fmt code
+    pull: if-not-exists
     image: rust_ci:latest
     commands:
       - rustup component add rustfmt
@@ -46,6 +47,7 @@ name: lint_coverage_test
 type: docker
 steps:
   - name: clippy-code
+    pull: if-not-exists
     image: rust_ci:latest
     privileged: true
     commands:
