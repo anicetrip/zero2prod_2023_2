@@ -1,3 +1,6 @@
+kind: pipeline
+name: docker_stop
+type: docker
 steps:
   - name: stop docker
     privileged: true
@@ -32,12 +35,12 @@ steps:
     pull: if-not-exists
     image: rust_ci:latest
     commands:
-      - rustup component add rustfmt
+      # - rustup component add rustfmt
       - cargo fmt -- --check
   - name: audit-code
     image: rust:latest
     commands:
-      - cargo install cargo-audit
+      # - cargo install cargo-audit
       - cargo audit
       - cargo test
 
@@ -51,13 +54,13 @@ steps:
     image: rust_ci:latest
     privileged: true
     commands:
-      - rustup component add clippy
+      # - rustup component add clippy
       - cargo clippy -- -D warnings
   - name: lint-code
     image: rust:latest
     privileged: true
     commands:
-      - cargo install cargo-tarpaulin
+      # - cargo install cargo-tarpaulin
       - cargo tarpaulin --ignore-tests
 
 

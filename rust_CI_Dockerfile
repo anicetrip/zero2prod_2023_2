@@ -7,3 +7,4 @@ RUN apt install libssl-dev -y
 RUN cargo install cargo-audit
 RUN rustup component add clippy
 RUN cargo install cargo-tarpaulin
+
