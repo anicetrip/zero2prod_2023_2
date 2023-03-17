@@ -1,5 +1,5 @@
 application:
   host: 127.0.0.1
 database:
-  host: "47.87.188.204"
+  host: "127.0.0.1"
   require_ssl: false
