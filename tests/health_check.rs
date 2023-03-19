@@ -149,7 +149,6 @@ async fn subscribe_returns_a_400_when_data_is_missing() {
             .send()
             .await
             .expect("failed to execute request");
-
         assert_eq!(
             400,
             response.status().as_u16(),
@@ -185,10 +184,9 @@ async fn subscribe_returns_a_400_when_fields_are_present_but_invalid() {
             response.status().as_u16(),
             "The API did not return a 400 Bad Request when the payload was {}.",
             description
-            );
+        );
     }
 }
-
 
 // #[test]
 // fn dummy_fail(){
