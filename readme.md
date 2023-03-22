@@ -63,3 +63,15 @@ I have a CI drone setting, how to make cd automatic?
 3. learn how to make new image based on docker
    1. for postgres(for ssl)
 4. write self dockerfile to reduce CI time spend(in rust ci)
+
+
+
+# 3-22
+## some summary for recent week
+Get an OA last week, tried my best on Sunday, and get failed result today. I'm still trying to find a job in In ireland, I have to be better.
+Didn't push things, but still doing something.
+1. build a personal email server, and didn't blocked by outlook, cheers!
+2. Found that as I use cloudflare as cdn, the curl header will be it's web link instead my server name.
+3. As Chapater 7 beginning from use email http api, and the software for email I used is not in the same format, I decdied to write a simple rust server for translate http to smtp.
+4. It will be pushed to github, I hope it will help someone others.
+5. Write some of code of chapater 7, it can't work as the email restful api haven't start to work now.
